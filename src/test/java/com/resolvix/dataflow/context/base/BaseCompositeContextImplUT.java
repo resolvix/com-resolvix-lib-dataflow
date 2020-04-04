@@ -45,13 +45,6 @@ public class BaseCompositeContextImplUT {
         String getValueToBeValidated();
     }
 
-    private static abstract class LocalValidatorContextImpl
-        extends BaseValidatorContextImpl<LocalValidatorContextImpl, ProcessingEvent>
-        implements LocalValidatorContext
-    {
-        public abstract String getValueToBeValidated();
-    }
-
     private interface LocalResolverContext
         extends ResolverContext<ProcessingEvent>
     {
@@ -62,19 +55,29 @@ public class BaseCompositeContextImplUT {
         void setResolvedValue(String value);
     }
 
-    private static abstract class LocalResolverContextImpl
-        extends BaseResolverContextImpl<LocalResolverContextImpl, ProcessingEvent>
-        implements LocalResolverContext
-    {
-        public abstract String getFirstParameter();
-
-        public abstract String getSecondParameter();
-
-        public abstract void setResolvedValue(String value);
-    }
+    //
+    //  Implementation Type A
+    //  =====================
+    //
+    //  Composite context implements one or more subordinate contexts
+    //  where upon, when passed to the relevant module, the context
+    //  is implicitly type cast to the interface for that module.
+    //
+    //  Advantages
+    //  ----------
+    //
+    //  1.  Module interface is impliedly selected.
+    //
+    //  Disadvantages
+    //  -------------
+    //
+    //  1.  Events are committed to the composite context directly rather
+    //      that indirectly via an intermediate event collection.
+    //
 
     private static class LocalCompositeContextTypeA
         extends BaseCompositeContextImpl<LocalCompositeContextTypeA, Context<ProcessingEvent>, ProcessingEvent>
+        implements LocalValidatorContext, LocalResolverContext
     {
         private final Map<String, Supplier<Context<ProcessingEvent>>>
             registeredContextTypeInstantiators = new HashMap<>();
@@ -88,6 +91,107 @@ public class BaseCompositeContextImplUT {
         private String resolvedValue;
 
         LocalCompositeContextTypeA(
+            String valueToBeValidated,
+            String firstParameter,
+            String secondParameter)
+        {
+            registeredContextTypeInstantiators.put(LocalValidatorContext.class.getCanonicalName(), this::self);
+            registeredContextTypeInstantiators.put(LocalResolverContext.class.getCanonicalName(), this::self);
+
+            this.valueToBeValidated = valueToBeValidated;
+            this.firstParameter = firstParameter;
+            this.secondParameter = secondParameter;
+        }
+
+        protected LocalCompositeContextTypeA self() {
+            return this;
+        }
+
+        @Override
+        protected Map<String, Supplier<Context<ProcessingEvent>>> getRegisteredContextTypes() {
+            return registeredContextTypeInstantiators;
+        }
+
+        @Override
+        public String getValueToBeValidated() {
+            return valueToBeValidated;
+        }
+
+        @Override
+        public String getFirstParameter() {
+            return firstParameter;
+        }
+
+        @Override
+        public String getSecondParameter() {
+            return secondParameter;
+        }
+
+        @Override
+        public void setResolvedValue(String value) {
+            this.resolvedValue = value;
+        }
+
+        public String getResolvedValue() {
+            return resolvedValue;
+        }
+    }
+
+    private static abstract class LocalValidatorContextImpl
+        extends BaseValidatorContextImpl<LocalValidatorContextImpl, ProcessingEvent>
+        implements LocalValidatorContext
+    {
+        public abstract String getValueToBeValidated();
+    }
+
+    private static abstract class LocalResolverContextImpl
+        extends BaseResolverContextImpl<LocalResolverContextImpl, ProcessingEvent>
+        implements LocalResolverContext
+    {
+        public abstract String getFirstParameter();
+
+        public abstract String getSecondParameter();
+
+        public abstract void setResolvedValue(String value);
+    }
+
+    //
+    //  Implementation Type B
+    //  =====================
+    //
+    //  Composite context exposes one or more subordinate interfaces through
+    //  abstract classes that are instantiated, at runtime, with anonymous
+    //  classes.
+    //
+    //  Advantages
+    //  ----------
+    //
+    //  1.  Mechanism enables the composite context to exercise greater
+    //      control on the runtime behaviour of the client context processing
+    //      mainframe through the use of {@code open} and {@code close}
+    //      subordinate context operations.
+    //
+    //  Disadvantages
+    //  -------------
+    //
+    //  1.  More complex to implement.
+    //
+
+    private static class LocalCompositeContextTypeB
+        extends BaseCompositeContextImpl<LocalCompositeContextTypeB, Context<ProcessingEvent>, ProcessingEvent>
+    {
+        private final Map<String, Supplier<Context<ProcessingEvent>>>
+            registeredContextTypeInstantiators = new HashMap<>();
+
+        private String valueToBeValidated;
+
+        private String firstParameter;
+
+        private String secondParameter;
+
+        private String resolvedValue;
+
+        LocalCompositeContextTypeB(
             String valueToBeValidated,
             String firstParameter,
             String secondParameter)
@@ -140,68 +244,6 @@ public class BaseCompositeContextImplUT {
         }
     }
 
-    private static class LocalCompositeContextTypeB
-        extends BaseCompositeContextImpl<LocalCompositeContextTypeB, Context<ProcessingEvent>, ProcessingEvent>
-        implements LocalValidatorContext, LocalResolverContext
-    {
-        private final Map<String, Supplier<Context<ProcessingEvent>>>
-            registeredContextTypeInstantiators = new HashMap<>();
-
-        private String valueToBeValidated;
-
-        private String firstParameter;
-
-        private String secondParameter;
-
-        private String resolvedValue;
-
-        LocalCompositeContextTypeB(
-            String valueToBeValidated,
-            String firstParameter,
-            String secondParameter)
-        {
-            registeredContextTypeInstantiators.put(LocalValidatorContext.class.getCanonicalName(), this::self);
-            registeredContextTypeInstantiators.put(LocalResolverContext.class.getCanonicalName(), this::self);
-
-            this.valueToBeValidated = valueToBeValidated;
-            this.firstParameter = firstParameter;
-            this.secondParameter = secondParameter;
-        }
-
-        protected LocalCompositeContextTypeB self() {
-            return this;
-        }
-
-        @Override
-        protected Map<String, Supplier<Context<ProcessingEvent>>> getRegisteredContextTypes() {
-            return registeredContextTypeInstantiators;
-        }
-
-        @Override
-        public String getValueToBeValidated() {
-            return valueToBeValidated;
-        }
-
-        @Override
-        public String getFirstParameter() {
-            return firstParameter;
-        }
-
-        @Override
-        public String getSecondParameter() {
-            return secondParameter;
-        }
-
-        @Override
-        public void setResolvedValue(String value) {
-            this.resolvedValue = value;
-        }
-
-        public String getResolvedValue() {
-            return resolvedValue;
-        }
-    }
-
     @Before
     public void before() {
 
@@ -209,14 +251,14 @@ public class BaseCompositeContextImplUT {
 
     @Test
     public void testOpenReadCloseLocalValidatorContextA() {
-        LocalValidatorContextImpl c = contextA.open(LocalValidatorContextImpl.class);
+        LocalValidatorContext c = contextA.open(LocalValidatorContext.class);
         assertThat(c.getValueToBeValidated(), equalTo("one"));
         contextA.close(c);
     }
 
     @Test
     public void testOpenReadWriteCloseLocalResolverContextA() {
-        LocalResolverContextImpl c = contextA.open(LocalResolverContextImpl.class);
+        LocalResolverContext c = contextA.open(LocalResolverContext.class);
         assertThat(c.getFirstParameter(), equalTo("two"));
         assertThat(c.getSecondParameter(), equalTo("three"));
         c.setResolvedValue(c.getFirstParameter() + " plus " + c.getSecondParameter());
@@ -226,14 +268,14 @@ public class BaseCompositeContextImplUT {
 
     @Test
     public void testOpenReadCloseLocalValidatorContextB() {
-        LocalValidatorContext c = contextB.open(LocalValidatorContext.class);
+        LocalValidatorContextImpl c = contextB.open(LocalValidatorContextImpl.class);
         assertThat(c.getValueToBeValidated(), equalTo("one"));
         contextB.close(c);
     }
 
     @Test
     public void testOpenReadWriteCloseLocalResolverContextB() {
-        LocalResolverContext c = contextB.open(LocalResolverContext.class);
+        LocalResolverContextImpl c = contextB.open(LocalResolverContextImpl.class);
         assertThat(c.getFirstParameter(), equalTo("two"));
         assertThat(c.getSecondParameter(), equalTo("three"));
         c.setResolvedValue(c.getFirstParameter() + " plus " + c.getSecondParameter());
