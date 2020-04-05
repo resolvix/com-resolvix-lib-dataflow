@@ -1,6 +1,6 @@
 package com.resolvix.dataflow.api;
 
-public interface Module<M extends Module<M, S, C, E>, S extends Substrate<S>, C extends Context<E>, E extends Event<E>>
+public interface Module<S extends Substrate<S>, C extends Context<E>, E extends Event<E>>
 {
 
     /**

@@ -6,7 +6,7 @@ import com.resolvix.dataflow.api.Module;
 import com.resolvix.dataflow.api.Substrate;
 
 public abstract class BaseModuleImpl<M extends BaseModuleImpl<M, S, C, E>, S extends Substrate<S>, C extends Context<E>, E extends Event<E>>
-    implements Module<M, S, C, E>
+    implements Module<S, C, E>
 {
 
 }

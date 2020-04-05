@@ -7,7 +7,7 @@ import com.resolvix.dataflow.api.Substrate;
 
 public abstract class BaseProcessorImpl<P extends BaseProcessorImpl<P, S, C, E>, S extends Substrate<S>, C extends ProcessorContext<E>, E extends Event<E>>
     extends BaseModuleImpl<P, S, C, E>
-    implements Processor<P, S, C, E>
+    implements Processor<S, C, E>
 {
 
     /**

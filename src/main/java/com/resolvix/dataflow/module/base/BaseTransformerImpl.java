@@ -7,7 +7,7 @@ import com.resolvix.dataflow.module.api.Transformer;
 
 public abstract class BaseTransformerImpl<T extends BaseTransformerImpl<T, S, C, E>, S extends Substrate<S>, C extends Context<E>, E extends Event<E>>
     extends BaseModuleImpl<T, S, C, E>
-    implements Transformer<T, S, C, E>
+    implements Transformer<S, C, E>
 {
 
     /**

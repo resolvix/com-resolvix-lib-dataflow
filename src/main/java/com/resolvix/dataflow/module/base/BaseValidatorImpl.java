@@ -7,7 +7,7 @@ import com.resolvix.dataflow.module.api.Validator;
 
 public abstract class BaseValidatorImpl<V extends BaseValidatorImpl<V, S, C, E>, S extends Substrate<S>, C extends ValidatorContext<E>, E extends Event<E>>
     extends BaseModuleImpl<V, S, C, E>
-    implements Validator<V, S, C, E>
+    implements Validator<S, C, E>
 {
 
     /**

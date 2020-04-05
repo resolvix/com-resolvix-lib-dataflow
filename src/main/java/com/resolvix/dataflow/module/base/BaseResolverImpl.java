@@ -7,7 +7,7 @@ import com.resolvix.dataflow.api.Substrate;
 
 public abstract class BaseResolverImpl<R extends BaseResolverImpl<R, S, C, E>, S extends Substrate<S>, C extends ResolverContext<E>, E extends Event<E>>
     extends BaseModuleImpl<R, S, C, E>
-    implements Resolver<R, S, C, E>
+    implements Resolver<S, C, E>
 {
     /**
      * Resolves data contained in the context, {@code C}, based on the
