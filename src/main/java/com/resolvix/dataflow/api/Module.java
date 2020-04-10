@@ -11,5 +11,5 @@ public interface Module<S extends Substrate<S>, C extends Context<E>, E extends 
      * @param context the context
      * @return true, if the module completed successfully; false, otherwise
      */
-    boolean execute(S substrate, C context);
+    boolean executeModule(S substrate, C context);
 }

@@ -68,13 +68,36 @@ public class BaseMainframeImplUT {
         extends BaseValidatorImpl<LocalValidatorA, LocalSubstrate, LocalCompositeContext, ProcessingEvent>
         implements Validator<LocalSubstrate, LocalCompositeContext, ProcessingEvent>
     {
+        private static final Logger LOGGER = LoggerFactory.getLogger(LocalValidatorA.class);
 
         public LocalValidatorA() {
             //
         }
 
         @Override
+        protected Logger getLogger() {
+            return LOGGER;
+        }
+
+        @Override
+        protected String getModuleName() {
+            return "LocalValidatorA";
+        }
+
+        @Override
+        protected boolean preconditions(LocalSubstrate substrate, LocalCompositeContext context) {
+            LOGGER.debug("LocalValidatorA preconditions");
+            return true;
+        }
+
+        @Override
         protected boolean validate(LocalSubstrate substrate, LocalCompositeContext context) {
+            return true;
+        }
+
+        @Override
+        protected boolean postconditions(LocalSubstrate substrate, LocalCompositeContext context) {
+            LOGGER.debug("LocalValidatorA postconditions");
             return true;
         }
     }
@@ -84,13 +107,36 @@ public class BaseMainframeImplUT {
         extends BaseValidatorImpl<LocalValidatorB, LocalSubstrate, LocalCompositeContext, ProcessingEvent>
         implements Validator<LocalSubstrate, LocalCompositeContext, ProcessingEvent>
     {
+        public static final Logger LOGGER = LoggerFactory.getLogger(LocalValidatorB.class);
 
         public LocalValidatorB() {
             //
         }
 
         @Override
+        protected Logger getLogger() {
+            return LOGGER;
+        }
+
+        @Override
+        protected String getModuleName() {
+            return "LocalValidatorB";
+        }
+
+        @Override
+        protected boolean preconditions(LocalSubstrate substrate, LocalCompositeContext context) {
+            LOGGER.debug("LocalValidatorB preconditions");
+            return true;
+        }
+
+        @Override
         protected boolean validate(LocalSubstrate substrate, LocalCompositeContext context) {
+            return true;
+        }
+
+        @Override
+        protected boolean postconditions(LocalSubstrate substrate, LocalCompositeContext context) {
+            LOGGER.debug("LocalValidatorB postconditions");
             return true;
         }
     }
@@ -100,13 +146,36 @@ public class BaseMainframeImplUT {
         extends BaseResolverImpl<LocalResolverC, LocalSubstrate, LocalCompositeContext, ProcessingEvent>
         implements Resolver<LocalSubstrate, LocalCompositeContext, ProcessingEvent>
     {
+        private static final Logger LOGGER = LoggerFactory.getLogger(LocalResolverC.class);
 
         public LocalResolverC() {
             //
         }
 
         @Override
+        protected Logger getLogger() {
+            return LOGGER;
+        }
+
+        @Override
+        protected String getModuleName() {
+            return "LocalResolverC";
+        }
+
+        @Override
+        protected boolean preconditions(LocalSubstrate substrate, LocalCompositeContext context) {
+            LOGGER.debug("LocalResolverC preconditions");
+            return true;
+        }
+
+        @Override
         protected boolean resolve(LocalSubstrate substract, LocalCompositeContext context) {
+            return true;
+        }
+
+        @Override
+        protected boolean postconditions(LocalSubstrate substrate, LocalCompositeContext context) {
+            LOGGER.debug("LocalResolverC postconditions");
             return true;
         }
     }
@@ -116,13 +185,36 @@ public class BaseMainframeImplUT {
         extends BaseProcessorImpl<LocalProcessorD, LocalSubstrate, LocalCompositeContext, ProcessingEvent>
         implements Processor<LocalSubstrate, LocalCompositeContext, ProcessingEvent>
     {
+        private static final Logger LOGGER = LoggerFactory.getLogger(LocalProcessorD.class);
 
         public LocalProcessorD() {
             //
         }
 
         @Override
+        protected Logger getLogger() {
+            return LOGGER;
+        }
+
+        @Override
+        protected String getModuleName() {
+            return "LocalProcessorD";
+        }
+
+        @Override
+        protected boolean preconditions(LocalSubstrate substrate, LocalCompositeContext context) {
+            LOGGER.debug("LocalProcessorD preconditions");
+            return true;
+        }
+
+        @Override
         protected boolean process(LocalSubstrate substrate, LocalCompositeContext context) {
+            return true;
+        }
+
+        @Override
+        protected boolean postconditions(LocalSubstrate substrate, LocalCompositeContext context) {
+            LOGGER.debug("LocalProcessorD postconditions");
             return true;
         }
     }

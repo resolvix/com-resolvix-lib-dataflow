@@ -79,7 +79,7 @@ public abstract class BaseMainframeImpl<M extends BaseMainframeImpl<M, S, C, E>,
         if (module == null)
             throw new IllegalStateException(
                 "module has a null value.");
-        return module.execute(substrate, context);
+        return module.executeModule(substrate, context);
     }
 
     @Override

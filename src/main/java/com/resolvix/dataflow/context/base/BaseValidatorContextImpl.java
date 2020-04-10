@@ -8,7 +8,7 @@ public abstract class BaseValidatorContextImpl<C extends BaseValidatorContextImp
     implements ValidatorContext<E>
 {
 
-    public BaseValidatorContextImpl() {
+    protected BaseValidatorContextImpl() {
         super();
     }
 }
