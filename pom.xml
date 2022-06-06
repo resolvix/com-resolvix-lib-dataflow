@@ -9,7 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>com-resolvix-dataflow</artifactId>
+    <artifactId>com-resolvix-lib-dataflow</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <name>lib</name>
@@ -50,7 +50,6 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>${slf4j.version}</version>
             <scope>test</scope>
         </dependency>
 
