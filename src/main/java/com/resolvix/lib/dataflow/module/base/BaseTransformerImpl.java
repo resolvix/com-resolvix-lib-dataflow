@@ -4,10 +4,11 @@ import com.resolvix.lib.dataflow.api.Context;
 import com.resolvix.lib.dataflow.api.Event;
 import com.resolvix.lib.dataflow.api.Substrate;
 import com.resolvix.lib.dataflow.module.api.Transformer;
+import org.checkerframework.checker.units.qual.C;
 
-public abstract class BaseTransformerImpl<T extends BaseTransformerImpl<T, S, C, E>, S extends Substrate<S>, C extends Context<E>, E extends Event<E>>
-    extends BaseModuleImpl<T, S, C, E>
-    implements Transformer<S, C, E>
+public abstract class BaseTransformerImpl<T extends BaseTransformerImpl<T, I, O, C, S, E>, I, O, C extends Context<E>, S extends Substrate<S>, E extends Event<E>>
+    extends BaseModuleImpl<T, I, O, C, S, E>
+    implements Transformer<I, O, C, S, E>
 {
 
     /**
@@ -19,10 +20,10 @@ public abstract class BaseTransformerImpl<T extends BaseTransformerImpl<T, S, C,
      * @return true, if the transformation process was successful; false,
      *  otherwise
      */
-    protected abstract boolean transform(S substrate, C context);
+    protected abstract boolean transform(I input, C context, S substrate);
 
     @Override
-    public boolean execute(S substrate, C context) {
-        return transform(substrate, context);
+    public boolean execute(I input, C context, S substrate) {
+        return transform(input, context, substrate);
     }
 }

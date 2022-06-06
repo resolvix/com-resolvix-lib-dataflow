@@ -29,11 +29,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>com.resolvix</groupId>
             <artifactId>com-resolvix-lib</artifactId>
             <version>${com-resolvix-lib.version}</version>

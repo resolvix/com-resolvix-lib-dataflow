@@ -14,5 +14,5 @@ public @interface ModuleDependency {
         *
         * @return the
         */
-       Class<? extends Module<?, ?, ?>>[] modules() default {};
+       Class<? extends Module<?, ?, ?, ?, ?>>[] modules() default {};
 }

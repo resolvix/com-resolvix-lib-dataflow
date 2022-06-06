@@ -1,15 +1,25 @@
 package com.resolvix.lib.dataflow.api;
 
-public interface Module<S extends Substrate<S>, C extends Context<E>, E extends Event<E>>
+import org.checkerframework.checker.units.qual.C;
+
+/**
+ *
+ * @param <I> input data type
+ * @param <O> output data type
+ * @param <C> processing context data type
+ * @param <S> platform substrate data type
+ * @param <E> event data type
+ */
+public interface Module<I, O, C extends Context<E>, S extends Substrate<S>, E extends Event<E>>
 {
 
     /**
-     * Execute the module on the context, {@code C}, using the
-     * system substrate, {@code S}.
+     * Consume the input, {@code I}, using the context, {@code C}, and the
+     * platform substrate, {@code S}.
      *
      * @param substrate the system substrate
      * @param context the context
      * @return true, if the module completed successfully; false, otherwise
      */
-    boolean executeModule(S substrate, C context);
+    boolean consume(I input, C context, S substrate);
 }

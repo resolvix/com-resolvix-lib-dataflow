@@ -4,10 +4,11 @@ import com.resolvix.lib.dataflow.api.Event;
 import com.resolvix.lib.dataflow.context.api.ProcessorContext;
 import com.resolvix.lib.dataflow.module.api.Processor;
 import com.resolvix.lib.dataflow.api.Substrate;
+import org.checkerframework.checker.units.qual.C;
 
-public abstract class BaseProcessorImpl<P extends BaseProcessorImpl<P, S, C, E>, S extends Substrate<S>, C extends ProcessorContext<E>, E extends Event<E>>
-    extends BaseModuleImpl<P, S, C, E>
-    implements Processor<S, C, E>
+public abstract class BaseProcessorImpl<P extends BaseProcessorImpl<P, I, O, C, S, E>, I, O, C extends ProcessorContext<E>, S extends Substrate<S>, E extends Event<E>>
+    extends BaseModuleImpl<P, I, O, C, S, E>
+    implements Processor<I, O, C, S, E>
 {
 
     /**
@@ -18,10 +19,10 @@ public abstract class BaseProcessorImpl<P extends BaseProcessorImpl<P, S, C, E>,
      * @param context the processor context
      * @return true, if the process was successful; false, otherwise
      */
-    protected abstract boolean process(S substrate, C context);
+    protected abstract boolean process(I input, C context, S substrate);
 
     @Override
-    public final boolean execute(S substrate, C context) {
-        return process(substrate, context);
+    public final boolean execute(I input, C context, S substrate) {
+        return process(input, context, substrate);
     }
 }

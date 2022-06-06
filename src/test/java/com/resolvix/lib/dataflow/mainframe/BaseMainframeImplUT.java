@@ -42,6 +42,16 @@ public class BaseMainframeImplUT {
 
     }
 
+    private static class LocalInput
+    {
+
+    }
+
+    private static class LocalOutput
+    {
+
+    }
+
     private static class LocalCompositeContext
         extends BaseCompositeContextImpl<LocalCompositeContext, Context<ProcessingEvent>, ProcessingEvent>
         implements ResolverContext<ProcessingEvent>,
@@ -65,8 +75,8 @@ public class BaseMainframeImplUT {
     }
 
     protected static class LocalValidatorA
-        extends BaseValidatorImpl<LocalValidatorA, LocalSubstrate, LocalCompositeContext, ProcessingEvent>
-        implements Validator<LocalSubstrate, LocalCompositeContext, ProcessingEvent>
+        extends BaseValidatorImpl<LocalValidatorA, LocalInput, LocalOutput, LocalCompositeContext, LocalSubstrate, ProcessingEvent>
+        implements Validator<LocalInput, LocalOutput, LocalCompositeContext, LocalSubstrate, ProcessingEvent>
     {
         private static final Logger LOGGER = LoggerFactory.getLogger(LocalValidatorA.class);
 
@@ -85,18 +95,18 @@ public class BaseMainframeImplUT {
         }
 
         @Override
-        protected boolean preconditions(LocalSubstrate substrate, LocalCompositeContext context) {
+        protected boolean preconditions(LocalInput input, LocalCompositeContext context, LocalSubstrate substrate) {
             LOGGER.debug("LocalValidatorA preconditions");
             return true;
         }
 
         @Override
-        protected boolean validate(LocalSubstrate substrate, LocalCompositeContext context) {
+        protected boolean validate(LocalInput input, LocalCompositeContext context, LocalSubstrate substrate) {
             return true;
         }
 
         @Override
-        protected boolean postconditions(LocalSubstrate substrate, LocalCompositeContext context) {
+        protected boolean postconditions(LocalCompositeContext context, LocalSubstrate substrate) {
             LOGGER.debug("LocalValidatorA postconditions");
             return true;
         }
@@ -104,8 +114,8 @@ public class BaseMainframeImplUT {
 
     @ModuleDependency(modules = {LocalValidatorA.class})
     protected static class LocalValidatorB
-        extends BaseValidatorImpl<LocalValidatorB, LocalSubstrate, LocalCompositeContext, ProcessingEvent>
-        implements Validator<LocalSubstrate, LocalCompositeContext, ProcessingEvent>
+        extends BaseValidatorImpl<LocalValidatorB, LocalInput, LocalOutput, LocalCompositeContext, LocalSubstrate, ProcessingEvent>
+        implements Validator<LocalInput, LocalOutput, LocalCompositeContext, LocalSubstrate, ProcessingEvent>
     {
         public static final Logger LOGGER = LoggerFactory.getLogger(LocalValidatorB.class);
 
@@ -124,18 +134,18 @@ public class BaseMainframeImplUT {
         }
 
         @Override
-        protected boolean preconditions(LocalSubstrate substrate, LocalCompositeContext context) {
+        protected boolean preconditions(LocalInput input, LocalCompositeContext context, LocalSubstrate substrate) {
             LOGGER.debug("LocalValidatorB preconditions");
             return true;
         }
 
         @Override
-        protected boolean validate(LocalSubstrate substrate, LocalCompositeContext context) {
+        protected boolean validate(LocalInput input, LocalCompositeContext context, LocalSubstrate substrate) {
             return true;
         }
 
         @Override
-        protected boolean postconditions(LocalSubstrate substrate, LocalCompositeContext context) {
+        protected boolean postconditions(LocalCompositeContext context, LocalSubstrate substrate) {
             LOGGER.debug("LocalValidatorB postconditions");
             return true;
         }
@@ -143,8 +153,8 @@ public class BaseMainframeImplUT {
 
     @ModuleDependency(modules = {LocalValidatorA.class, LocalValidatorB.class})
     protected static class LocalResolverC
-        extends BaseResolverImpl<LocalResolverC, LocalSubstrate, LocalCompositeContext, ProcessingEvent>
-        implements Resolver<LocalSubstrate, LocalCompositeContext, ProcessingEvent>
+        extends BaseResolverImpl<LocalResolverC, LocalInput, LocalOutput, LocalCompositeContext, LocalSubstrate, ProcessingEvent>
+        implements Resolver<LocalInput, LocalOutput, LocalCompositeContext, LocalSubstrate, ProcessingEvent>
     {
         private static final Logger LOGGER = LoggerFactory.getLogger(LocalResolverC.class);
 
@@ -163,18 +173,18 @@ public class BaseMainframeImplUT {
         }
 
         @Override
-        protected boolean preconditions(LocalSubstrate substrate, LocalCompositeContext context) {
+        protected boolean preconditions(LocalInput input, LocalCompositeContext context, LocalSubstrate substrate) {
             LOGGER.debug("LocalResolverC preconditions");
             return true;
         }
 
         @Override
-        protected boolean resolve(LocalSubstrate substract, LocalCompositeContext context) {
+        protected boolean resolve(LocalInput input, LocalCompositeContext context, LocalSubstrate substrate) {
             return true;
         }
 
         @Override
-        protected boolean postconditions(LocalSubstrate substrate, LocalCompositeContext context) {
+        protected boolean postconditions(LocalCompositeContext context, LocalSubstrate substrate) {
             LOGGER.debug("LocalResolverC postconditions");
             return true;
         }
@@ -182,8 +192,8 @@ public class BaseMainframeImplUT {
 
     @ModuleDependency(modules = LocalResolverC.class)
     protected static class LocalProcessorD
-        extends BaseProcessorImpl<LocalProcessorD, LocalSubstrate, LocalCompositeContext, ProcessingEvent>
-        implements Processor<LocalSubstrate, LocalCompositeContext, ProcessingEvent>
+        extends BaseProcessorImpl<LocalProcessorD, LocalInput, LocalOutput, LocalCompositeContext, LocalSubstrate, ProcessingEvent>
+        implements Processor<LocalInput, LocalOutput, LocalCompositeContext, LocalSubstrate, ProcessingEvent>
     {
         private static final Logger LOGGER = LoggerFactory.getLogger(LocalProcessorD.class);
 
@@ -202,26 +212,26 @@ public class BaseMainframeImplUT {
         }
 
         @Override
-        protected boolean preconditions(LocalSubstrate substrate, LocalCompositeContext context) {
+        protected boolean preconditions(LocalInput input, LocalCompositeContext context, LocalSubstrate substrate) {
             LOGGER.debug("LocalProcessorD preconditions");
             return true;
         }
 
         @Override
-        protected boolean process(LocalSubstrate substrate, LocalCompositeContext context) {
+        protected boolean process(LocalInput input, LocalCompositeContext context, LocalSubstrate substrate) {
             return true;
         }
 
         @Override
-        protected boolean postconditions(LocalSubstrate substrate, LocalCompositeContext context) {
+        protected boolean postconditions(LocalCompositeContext context, LocalSubstrate substrate) {
             LOGGER.debug("LocalProcessorD postconditions");
             return true;
         }
     }
 
     private class LocalMainframeImpl
-        extends BaseMainframeImpl<LocalMainframeImpl, LocalSubstrate, LocalCompositeContext, ProcessingEvent>
-        implements Mainframe<LocalSubstrate, LocalCompositeContext, ProcessingEvent>
+        extends BaseMainframeImpl<LocalMainframeImpl, LocalInput, LocalOutput, LocalCompositeContext, LocalSubstrate, ProcessingEvent>
+        implements Mainframe<LocalInput, LocalOutput, LocalCompositeContext, LocalSubstrate, ProcessingEvent>
     {
         private final Logger logger = LoggerFactory.getLogger(LocalMainframeImpl.class);
 
@@ -231,9 +241,9 @@ public class BaseMainframeImplUT {
         }
 
         @Override
-        protected Class<? extends Module<LocalSubstrate, LocalCompositeContext, ProcessingEvent>>[] getModuleClasses() {
-            Class<? extends Module<LocalSubstrate, LocalCompositeContext, ProcessingEvent>>[] modules
-                = (Class<? extends Module<LocalSubstrate, LocalCompositeContext, ProcessingEvent>>[])
+        protected Class<? extends Module<LocalInput, LocalOutput, LocalCompositeContext, LocalSubstrate, ProcessingEvent>>[] getModuleClasses() {
+            Class<? extends Module<LocalInput, LocalOutput, LocalCompositeContext, LocalSubstrate, ProcessingEvent>>[] modules
+                = (Class<? extends Module<LocalInput, LocalOutput, LocalCompositeContext, LocalSubstrate, ProcessingEvent>>[])
                     Array.newInstance(Class.class, 4);
             return ListBuilder.getBuilder(Class.class)
                 .add(LocalResolverC.class)
@@ -255,6 +265,6 @@ public class BaseMainframeImplUT {
         LocalMainframeImpl localMainframe = new LocalMainframeImpl();
         LocalSubstrate localSubstrate = new LocalSubstrate();
         LocalCompositeContext localCompositeContext = new LocalCompositeContext();
-        assertTrue(localMainframe.execute(localSubstrate, localCompositeContext));
+        assertTrue(localMainframe.execute((LocalInput) null, localCompositeContext, localSubstrate));
     }
 }

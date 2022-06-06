@@ -5,8 +5,8 @@ import com.resolvix.lib.dataflow.api.Event;
 import com.resolvix.lib.dataflow.api.Module;
 import com.resolvix.lib.dataflow.api.Substrate;
 
-public interface Verifier<S extends Substrate<S>, C extends Context<E>, E extends Event<E>>
-    extends Module<S, C, E>
+public interface Verifier<I, O, C extends Context<E>, S extends Substrate<S>, E extends Event<E>>
+    extends Module<I, O, C, S, E>
 {
 
 }

@@ -4,10 +4,11 @@ import com.resolvix.lib.dataflow.api.Context;
 import com.resolvix.lib.dataflow.api.Event;
 import com.resolvix.lib.dataflow.api.Module;
 import com.resolvix.lib.dataflow.api.Substrate;
+import org.checkerframework.checker.units.qual.C;
 import org.slf4j.Logger;
 
-public abstract class BaseModuleImpl<M extends BaseModuleImpl<M, S, C, E>, S extends Substrate<S>, C extends Context<E>, E extends Event<E>>
-    implements Module<S, C, E>
+public abstract class BaseModuleImpl<M extends BaseModuleImpl<M, I, O, C, S, E>, I, O, C extends Context<E>, S extends Substrate<S>,  E extends Event<E>>
+    implements Module<I, O, C, S, E>
 {
     protected abstract Logger getLogger();
 
@@ -23,7 +24,7 @@ public abstract class BaseModuleImpl<M extends BaseModuleImpl<M, S, C, E>, S ext
      * @param context
      * @return
      */
-    protected abstract boolean preconditions(S substrate, C context);
+    protected abstract boolean preconditions(I input, C context, S substrate);
 
     /**
      *
@@ -31,7 +32,7 @@ public abstract class BaseModuleImpl<M extends BaseModuleImpl<M, S, C, E>, S ext
      * @param context the context
      * @return
      */
-    protected abstract boolean execute(S substrate, C context);
+    protected abstract boolean execute(I input, C context, S substrate);
 
     /**
      *
@@ -39,14 +40,14 @@ public abstract class BaseModuleImpl<M extends BaseModuleImpl<M, S, C, E>, S ext
      * @param context
      * @return
      */
-    protected abstract boolean postconditions(S substrate, C context);
+    protected abstract boolean postconditions(C context, S substrate);
 
     @Override
-    public final boolean executeModule(S substrate, C context) {
+    public final boolean consume(I input, C context, S substrate) {
         getLogger().debug("BEGIN {}", getModuleName());
-        assert preconditions(substrate, context); //NOSONAR
-        boolean b = execute(substrate, context);
-        assert postconditions(substrate, context); //NOSONAR
+        assert preconditions(input, context, substrate); //NOSONAR
+        boolean b = execute(input, context, substrate);
+        assert postconditions(context, substrate); //NOSONAR
         getLogger().debug("END: {}", getModuleName());
         return b;
     }

@@ -4,16 +4,17 @@ import com.resolvix.lib.dataflow.api.Event;
 import com.resolvix.lib.dataflow.api.Substrate;
 import com.resolvix.lib.dataflow.context.api.VerifierContext;
 import com.resolvix.lib.dataflow.module.api.Verifier;
+import org.checkerframework.checker.units.qual.C;
 
-public abstract class BaseVerifierImpl<V extends BaseVerifierImpl<V, S, C, E>, S extends Substrate<S>, C extends VerifierContext<E>, E extends Event<E>>
-    extends BaseModuleImpl<V, S, C, E>
-    implements Verifier<S, C, E>
+public abstract class BaseVerifierImpl<V extends BaseVerifierImpl<V, I, O, C, S, E>, I, O, C extends VerifierContext<E>, S extends Substrate<S>, E extends Event<E>>
+    extends BaseModuleImpl<V, I, O, C, S, E>
+    implements Verifier<I, O, C, S, E>
 {
 
-    protected abstract boolean verify(S substrate, C context);
+    protected abstract boolean verify(I input, C context, S substrate);
 
     @Override
-    public final boolean execute(S substrate, C context) {
-        return verify(substrate, context);
+    public final boolean execute(I input, C context, S substrate) {
+        return verify(input, context, substrate);
     }
 }

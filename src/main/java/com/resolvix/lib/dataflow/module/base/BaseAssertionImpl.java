@@ -4,16 +4,17 @@ import com.resolvix.lib.dataflow.api.Event;
 import com.resolvix.lib.dataflow.api.Substrate;
 import com.resolvix.lib.dataflow.context.api.AssertionContext;
 import com.resolvix.lib.dataflow.module.api.Assertion;
+import org.checkerframework.checker.units.qual.C;
 
-public abstract class BaseAssertionImpl<A extends BaseAssertionImpl<A, S, C, E>, S extends Substrate<S>, C extends AssertionContext<E>, E extends Event<E>>
-    extends BaseModuleImpl<A, S, C, E>
-    implements Assertion<S, C, E>
+public abstract class BaseAssertionImpl<A extends BaseAssertionImpl<A, I, O, C, S, E>, I, O, C extends AssertionContext<E>, S extends Substrate<S>, E extends Event<E>>
+    extends BaseModuleImpl<A, I, O, C, S, E>
+    implements Assertion<I, O, C, S, E>
 {
 
     protected abstract void assertion(S substrate, C context)
         throws AssertionError;
 
-    public final boolean execute(S substrate, C context) {
+    public final boolean execute(I input, C context, S substrate) {
         try {
             assertion(substrate, context);
             return true;
