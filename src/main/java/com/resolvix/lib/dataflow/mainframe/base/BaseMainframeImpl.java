@@ -9,7 +9,6 @@ import com.resolvix.lib.dataflow.api.Substrate;
 import com.resolvix.lib.dependency.DependencyResolver;
 import com.resolvix.lib.dependency.api.CyclicDependencyException;
 import com.resolvix.lib.dependency.api.DependencyNotFoundException;
-import org.checkerframework.checker.units.qual.C;
 import org.slf4j.Logger;
 
 import java.lang.reflect.Array;
@@ -60,7 +59,7 @@ public abstract class BaseMainframeImpl<M extends BaseMainframeImpl<M, I, O, C, 
     {
         if (instantiatedModules == null) {
             try {
-                Class<? extends Module<I, O, C, S, E>> orderedModuleClasses[] = getOrderedModuleClasses();
+                Class<? extends Module<I, O, C, S, E>>[] orderedModuleClasses = getOrderedModuleClasses();
                 instantiatedModules = (Module<I, O, C, S, E>[]) Array.newInstance(Module.class, orderedModuleClasses.length);
                 int i = 0;
                 for (Class<? extends Module<I, O, C, S, E>> moduleClass : orderedModuleClasses) {

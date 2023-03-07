@@ -1,13 +1,11 @@
 package com.resolvix.lib.dataflow.api;
 
-import org.checkerframework.checker.units.qual.C;
-
 /**
  *
- * @param <I> input data type
- * @param <O> output data type
- * @param <C> processing context data type
- * @param <S> platform substrate data type
+ * @param <I> input data type, read-only
+ * @param <O> output data type, write-only
+ * @param <C> processing context data type, read-write
+ * @param <S> platform substrate data type, functional
  * @param <E> event data type
  */
 public interface Module<I, O, C extends Context<E>, S extends Substrate<S>, E extends Event<E>>

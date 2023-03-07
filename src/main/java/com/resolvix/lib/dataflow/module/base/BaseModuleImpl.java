@@ -4,7 +4,6 @@ import com.resolvix.lib.dataflow.api.Context;
 import com.resolvix.lib.dataflow.api.Event;
 import com.resolvix.lib.dataflow.api.Module;
 import com.resolvix.lib.dataflow.api.Substrate;
-import org.checkerframework.checker.units.qual.C;
 import org.slf4j.Logger;
 
 public abstract class BaseModuleImpl<M extends BaseModuleImpl<M, I, O, C, S, E>, I, O, C extends Context<E>, S extends Substrate<S>,  E extends Event<E>>

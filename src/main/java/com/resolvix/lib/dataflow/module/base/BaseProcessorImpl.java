@@ -4,7 +4,6 @@ import com.resolvix.lib.dataflow.api.Event;
 import com.resolvix.lib.dataflow.context.api.ProcessorContext;
 import com.resolvix.lib.dataflow.module.api.Processor;
 import com.resolvix.lib.dataflow.api.Substrate;
-import org.checkerframework.checker.units.qual.C;
 
 public abstract class BaseProcessorImpl<P extends BaseProcessorImpl<P, I, O, C, S, E>, I, O, C extends ProcessorContext<E>, S extends Substrate<S>, E extends Event<E>>
     extends BaseModuleImpl<P, I, O, C, S, E>

@@ -4,7 +4,6 @@ import com.resolvix.lib.dataflow.api.Event;
 import com.resolvix.lib.dataflow.context.api.ValidatorContext;
 import com.resolvix.lib.dataflow.api.Substrate;
 import com.resolvix.lib.dataflow.module.api.Validator;
-import org.checkerframework.checker.units.qual.C;
 
 public abstract class BaseValidatorImpl<V extends BaseValidatorImpl<V, I, O, C, S, E>, I, O, C extends ValidatorContext<E>, S extends Substrate<S>, E extends Event<E>>
     extends BaseModuleImpl<V, I, O, C, S, E>

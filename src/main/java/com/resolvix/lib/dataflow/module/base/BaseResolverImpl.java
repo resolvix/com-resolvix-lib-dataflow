@@ -4,7 +4,6 @@ import com.resolvix.lib.dataflow.api.Event;
 import com.resolvix.lib.dataflow.context.api.ResolverContext;
 import com.resolvix.lib.dataflow.module.api.Resolver;
 import com.resolvix.lib.dataflow.api.Substrate;
-import org.checkerframework.checker.units.qual.C;
 
 public abstract class BaseResolverImpl<R extends BaseResolverImpl<R, I, O, C, S, E>, I, O, C extends ResolverContext<E>, S extends Substrate<S>, E extends Event<E>>
     extends BaseModuleImpl<R, I, O, C, S, E>

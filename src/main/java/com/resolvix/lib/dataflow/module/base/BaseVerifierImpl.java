@@ -4,7 +4,6 @@ import com.resolvix.lib.dataflow.api.Event;
 import com.resolvix.lib.dataflow.api.Substrate;
 import com.resolvix.lib.dataflow.context.api.VerifierContext;
 import com.resolvix.lib.dataflow.module.api.Verifier;
-import org.checkerframework.checker.units.qual.C;
 
 public abstract class BaseVerifierImpl<V extends BaseVerifierImpl<V, I, O, C, S, E>, I, O, C extends VerifierContext<E>, S extends Substrate<S>, E extends Event<E>>
     extends BaseModuleImpl<V, I, O, C, S, E>
